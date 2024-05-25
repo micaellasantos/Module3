@@ -2,7 +2,7 @@
 Creating and minting a token involves deploying a smart contract on a blockchain platform like Ethereum.
 
 ## Description
-creating and minting tokens involves gas fees (transaction fees) and requires some familiarity with blockchain development and smart contracts. 
+Creating and minting tokens involves gas fees (transaction fees) and requires some familiarity with blockchain development and smart contracts. 
 
 ## Getting Started
 
