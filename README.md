@@ -12,43 +12,33 @@ Using Remix IDE, a online development environment for Ethereum smart contracts, 
 
 Code:
 
-//SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.18;
-        
-        contract Tokens{
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-            address public MainOwner;
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-            constructor(address Owner){
-                MainOwner = Owner;
-            }
-                    mapping (address Address => uint Etherium)public Balances;
+contract Tokens is ERC20, Ownable {
+    address private _mainOwner;
 
-                function Minting (address Sender, uint _Etherium)public{
-                        if(Sender == MainOwner){
-                            Balances[Sender] += _Etherium;
-                        }else{
-                            revert("Only owner can mint an Etherium");
-                        }
-                }
+    constructor(address owner) ERC20("MyToken", "MTK") Ownable(owner) {
+        _mainOwner = owner;
+        _mint(owner, 700 * (10**uint256(decimals())));
+    }
 
-                function Burning (address Sender, uint _Etherium)public{
-                       if(Balances[Sender] <= _Etherium){
-                            revert("You don't have enough balances");
-                       }else{
-                            Balances[Sender] -= _Etherium;
-                       }
-                }
+    function mainOwner() public view returns (address) {
+        return _mainOwner;
+    }
 
-                function Transferring(address From, address To, uint _Etherium)public{
-                        if(Balances[From] <= _Etherium){
-                            revert("You don't have enough balances");
-                       }else{
-                            Balances[From] -= _Etherium;
-                            Balances[To] += _Etherium;
-                       }
-                }
-         }
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
+    }
+
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
+    }
+}
+
 
 
 ### Author
